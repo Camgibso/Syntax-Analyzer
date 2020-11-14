@@ -15,7 +15,6 @@
 // 
 // Note: If a user input file contains multiple syntax errors,
 // your solution is only required to find and report the 1st syntax error
-// Printf statements commented out for de-bugging
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -38,8 +37,6 @@ void input(char lexeme[], char tokenName[]){
 			if(nextToken == ASSIGN_OP){
 				lex(); // Get next token send to expression
 				expression(lexeme, tokenName);
-				//lex();
-				//input(lexeme, tokenName);
 				//printf("lexeme: %s / token name: %s / nextToken: %d -here\n", lexeme, tokenName, nextToken);
 			}
 			// if the next token isn't keyod, semicolon error out
@@ -62,9 +59,7 @@ void input(char lexeme[], char tokenName[]){
 
 		// Case for while
 		case KEY_WHILE:
-			//printf("lexeme: %s / token name: %s / nextToken: %d -here\n", lexeme, tokenName, nextToken);
 			lex();
-			//printf("lexeme: %s / token name: %s / nextToken: %d -here\n", lexeme, tokenName, nextToken);
 			if(nextToken = IDENT){
 				lex();
 			}	
@@ -101,7 +96,6 @@ void input(char lexeme[], char tokenName[]){
 		// Case for semicolon
 		// S::= V:=E | read (V) | write(V) | while C do S od | S;S
 		case SEMICOLON:
-			//printf("lexeme: %s / token name: %s / nextToken: %d -here\n", lexeme, tokenName, nextToken);
 			lex();
 			//printf("lexeme: %s / token name: %s / nextToken: %d -here\n", lexeme, tokenName, nextToken);
 			// Next input can only be key of or eof or ident
@@ -109,16 +103,10 @@ void input(char lexeme[], char tokenName[]){
 				//error(lexeme, tokenName);
 				error(lexeme, tokenName);
 			}
-			//else{
-				//input(lexeme, tokenName);
-			//}
 			break;
 		case EOF:
 			break;
 		default:
-			//error(lexeme, tokenName);
-			//exit(1);
-			lex();
 			break;
 	}
 	
@@ -170,49 +158,38 @@ void factor(char lexeme[], char tokenName[]){
 	// F::= (E)| N| V
 	printf("Enter <factor> \n");
 
-	//printf("\n lexeme: %s / token name: %s / nextToken: %d -prelex", lexeme, tokenName, nextToken);
-	//lex();
-    //printf("\n lexeme: %s / token name: %s / nextToken: %d -postlex", lexeme, tokenName, nextToken);
-	//if(nextToken != KEY_OD){
-    	/* Determine which RHS */
-    	if (nextToken == IDENT || nextToken == INT_LIT) {
-    	    //printf("\n lexeme: %s / token name: %s / nextToken: %d -in if loop", lexeme, tokenName, nextToken);
-    	    lex(); /* Get the next token */
-    	} 
-    	//if (nextToken == SEMICOLON){
-    	//	input(lexeme, tokenName);
-    	//}
-    	else {
-    	    /* If the RHS is (<expr>), call lex to pass over the 
-    	    left parenthesis, call expr, and check for the right 
-    	    parenthesis */
-    	    if (nextToken == LEFT_PAREN) {
-    	        lex(); 
-    	        expression(lexeme, tokenName);
-
-    	        if (nextToken == RIGHT_PAREN) {
-    	            lex(); 
-    	        } 
-    	        else { 
-    	            error(lexeme, tokenName);
-    	        }
-    	    } /* End of if (nextToken == ... */
-    	    /* It was not an id, an integer literal, or a left parenthesis */
-    	    else 
-    	    { 
-    	        error(lexeme, tokenName); 
-    	    }
-    //	}
-     /* End of else */
- 	}
+  /* Determine which RHS */
+  if (nextToken == IDENT || nextToken == INT_LIT) {
+      //printf("\n lexeme: %s / token name: %s / nextToken: %d -in if loop", lexeme, tokenName, nextToken);
+      lex(); /* Get the next token */
+  } 
+  else {
+      /* If the RHS is (<expr>), call lex to pass over the 
+      left parenthesis, call expr, and check for the right 
+      parenthesis */
+      if (nextToken == LEFT_PAREN) {
+          lex(); 
+          expression(lexeme, tokenName);
+					
+          if (nextToken == RIGHT_PAREN) {
+              lex(); 
+          } 
+          else { 
+              error(lexeme, tokenName);
+          }
+      } /* End of if (nextToken == ... */
+      /* It was not an id, an integer literal, or a left parenthesis */
+      else{ 
+          error(lexeme, tokenName); 
+      }
+ 	} /* End of else */
 	printf("Exit <factor> \n");
 }
 
 // If the provided user file contains syntax errors
 static void error(char lexeme[], char tokenName[]){
-	// Your solution must print out “Error encounter:
-	//  The next lexeme was <lexeme>and the next token was <token>”
+	// Your solution must print out “Error encounter: 
+	// The next lexeme was <lexeme>and the next token was <token>”
 	printf("\nError encounter: The next lexeme was %s and the next token was %s \n", lexeme, tokenName);
-	// Has exit code of 1
 	exit(1);
 }

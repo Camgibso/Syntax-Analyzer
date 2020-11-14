@@ -45,7 +45,7 @@ int main(/*int argc, char **argv*/)
     // If user provided a file that DNE: 
     // Display appropriate error message, exit code of 3
 		// Saved line for linux file input
-		// if ((in_fp = fopen(argv[1], "r")) == NULL) {
+		//if ((in_fp = fopen(argv[1], "r")) == NULL) {
 		if ((in_fp = fopen("test.danc", "r")) == NULL) {
         printf("ERROR - cannot open file \n");
         exit(3);
@@ -57,7 +57,7 @@ int main(/*int argc, char **argv*/)
         do {
             lex();
             // Parser
-            input(lexeme, tokenName); //char lexeme [100], char tokenName [100]
+            input(lexeme, tokenName);
         } while (nextToken != EOF);
     }
 
