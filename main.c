@@ -225,7 +225,6 @@ static int keylookup(char ch) {
                 strcpy(tokenName, "IDENT");
             }
             break;
-
           default:
           	nextToken = IDENT;
                 strcpy(tokenName, "IDENT");
@@ -233,7 +232,6 @@ static int keylookup(char ch) {
         }
     return nextToken;
 }
-
 
 /*****************************************************/
 /* addChar - a function to add nextChar to lexeme */
@@ -252,14 +250,14 @@ static void addChar() {
 static void getChar() {
     if ((nextChar = getc(in_fp)) != EOF) {
         if (isalpha(nextChar)){
-                    charClass = LETTER;
-                }
+          charClass = LETTER;
+        }
         else if (isdigit(nextChar)){
-            charClass = DIGIT;
-                }
+          charClass = DIGIT;
+        }
         else{
-                 charClass = UNKNOWN;
-                }
+          charClass = UNKNOWN;
+        }
     } 
     else {
         charClass = EOF;
@@ -289,7 +287,6 @@ int lex() {
                 addChar();
                 getChar();
             }
-
             break;
 
         /* Parse integer literals */
@@ -323,15 +320,12 @@ int lex() {
             break;
     } 
         /* End of switch */
-
-    
         // Program was producing dupe lines at end, if loop stops this
         if(nextToken == EOF){
             return nextToken;
         }
-        else {
+        else{
             printf("Next lexeme: %s        Next Token: %s \n", lexeme, tokenName);
         }
-
     return nextToken;
 }

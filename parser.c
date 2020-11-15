@@ -1,7 +1,6 @@
 // Cameron Gibson (R#11424503) | Assignment #4 | 10/26/20
 // 
 //  A syntax parser with the following grammar rules:
-//	
 // P::= S
 // S::= V:=E | read (V) | write(V) | while C do S od | S;S
 // C::= E< E | E> E | E= E | E<>E | E<= E | E>= E
@@ -12,7 +11,6 @@
 // N::= 0 | 1 | ... | 8 | 9 | 0N| 1N| ... | 8N| 9N
 // 
 // Error codes on Linux: echo $? -return echo code
-// 
 // Note: If a user input file contains multiple syntax errors,
 // your solution is only required to find and report the 1st syntax error
 
@@ -21,10 +19,12 @@
 #include "parser.h"
 #include "front.h"
 
+/* Local Variables */
 static void error();
 
 // P::= S
 void input(char lexeme[], char tokenName[]){
+	// Rules to follow:
 	// S::= V:=E | read (V) | write(V) | while C do S od | S;S
 	printf("Enter <input> \n");
 
@@ -100,7 +100,6 @@ void input(char lexeme[], char tokenName[]){
 			//printf("lexeme: %s / token name: %s / nextToken: %d -here\n", lexeme, tokenName, nextToken);
 			// Next input can only be key of or eof or ident
 			if(nextToken == KEY_OD || nextToken == EOF || nextToken == IDENT){
-				//error(lexeme, tokenName);
 				error(lexeme, tokenName);
 			}
 			break;
@@ -117,13 +116,13 @@ void comparison(char lexeme[], char tokenName[]){
 	// C::= E< E | E> E | E= E | E<>E | E<= E | E>= E
 	printf("Enter <comparison> \n");
 	lex();
+
 	// While loop according to syntax above, send to expression
 	while(nextToken == LESSER_OP || nextToken == GREATER_OP || nextToken ==  EQUAL_OP || 
 		nextToken == NEQUAL_OP || nextToken == LEQUAL_OP || nextToken == GEQUAL_OP) {
 		lex(); /* Get the next token */
 		expression(lexeme, tokenName);
 	}
-
 	expression(lexeme, tokenName);
 	printf("Exit <comparison> \n");
 }
@@ -138,7 +137,6 @@ void expression(char lexeme[], char tokenName[]){
 		lex(); /* Get the next token */
 		expression(lexeme, tokenName);
 	}
-
 	printf("Exit <expression> \n");
 }
 
@@ -160,28 +158,28 @@ void factor(char lexeme[], char tokenName[]){
 
   /* Determine which RHS */
   if (nextToken == IDENT || nextToken == INT_LIT) {
-      //printf("\n lexeme: %s / token name: %s / nextToken: %d -in if loop", lexeme, tokenName, nextToken);
-      lex(); /* Get the next token */
+    //printf("\n lexeme: %s / token name: %s / nextToken: %d -in if loop", lexeme, tokenName, nextToken);
+    lex(); /* Get the next token */
   } 
   else {
-      /* If the RHS is (<expr>), call lex to pass over the 
-      left parenthesis, call expr, and check for the right 
-      parenthesis */
-      if (nextToken == LEFT_PAREN) {
-          lex(); 
-          expression(lexeme, tokenName);
-					
-          if (nextToken == RIGHT_PAREN) {
-              lex(); 
-          } 
-          else { 
-              error(lexeme, tokenName);
-          }
-      } /* End of if (nextToken == ... */
-      /* It was not an id, an integer literal, or a left parenthesis */
-      else{ 
-          error(lexeme, tokenName); 
-      }
+  	/* If the RHS is (<expr>), call lex to pass over the 
+  	left parenthesis, call expr, and check for the right 
+  	parenthesis */
+  	if (nextToken == LEFT_PAREN) {
+  	    lex(); 
+  	    expression(lexeme, tokenName);
+				
+  	    if (nextToken == RIGHT_PAREN) {
+  	        lex(); 
+  	    } 
+  	    else { 
+  	        error(lexeme, tokenName);
+  	    }
+  	} /* End of if (nextToken == ... */
+  	/* It was not an id, an integer literal, or a left parenthesis */
+  	else{ 
+  	    error(lexeme, tokenName); 
+  	}
  	} /* End of else */
 	printf("Exit <factor> \n");
 }
