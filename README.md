@@ -1,41 +1,79 @@
-A syntax parser with the following grammar rules:
-	
-P::= S
+This project is for Concepts of Programming Languages CS3361
+This project makes use of multiprocessing and other concepts we learned in class.
+I am running the larger jobs on the High Performance Computing Center(HPCC) at Texas Tech University, in the Quanah cluster. Throughout this project, apart from the main goal of the project, I have learned to use Quanah, as well as request jobs by creating my own testing shell scripts.
 
-S::= V:=E | read (V) | write(V) | while C do S od | S;S
+How to run:
+python CellSimulator.py
 
-C::= E< E | E> E | E= E | E<>E | E<= E | E>= E
+Description
+The cell simulation will go through 100 steps, and during each step, each cell is evaluated against its neighbors to determine if the cell is alive or dead.
 
-E::= T| E+T| E-T
+Cell States:
+Dead:   .
+Alive:   O
+ 
 
-T::= F| T*F| T/F
+Cell Neighbors:
+C is the current cell
+X are the neighboring cells
 
-F::= (E)| N| V
+    XXX
+    XCX
+    XXX
+ 
 
-V::= a | b | ... | y | z | aV| bV| ... | yV| zV
+Determining Factors:
+ Alive cell stays alive if:
+	Has 2 - 4 alive neighbors
+ Dead cell becomes alive if:
+	Has an positive non-zero even number of alive neighbors
+Otherwise:
+	The cell dies
+ 
 
-N::= 0 | 1 | ... | 8 | 9 | 0N| 1N| ... | 8N| 9N
+Example:
+
+Starting Colony:
+    ........O..OO...O.................O.OO...
+    ..O............O..O.O..OO...............
+    .......O.......O.....O...........O...OO.
+    ....O..O.........O......O.............O.
+    ........O.....O.O......O.......O........
+    .......O.....O..........................
+    .O...........O............O.......OO.O..
+    ..O....O...O....OO......................
+    .O.O...........O................O.......    
+    O..........O.........O.............O....
+    ......O........O.......O..........O.....
+    ..OO..............O.........O...O.O...O.
+    .....OO.O..O.O.....O.O..................
+    O........O....OO.....O.....OO.O.........
+    O............O............O..O......O...
+    ...OO.......O...............O.........O.
+    O.............O............O.........O..
+    .........O.....O..............O...O.....
+    ........................................
+    .O........O...............O......O.O....
 
 
-Error codes on Linux: echo $? -return echo code
-
-Note: If a user input file contains multiple syntax errors,
-your solution is only required to find and report the 1st syntax error
-
-1) Your solution must print out “DanC Parser :: R<#>” as the first line of output with <#> being replaced by
-  your R#. The double colon “::” is required for correct grading of your submission.
-2) If the provided user file is free of syntax errors:
-  a. Your solution must print out “Syntax Validated” as the last line of output.
-  b. Your solution must return with an exit code of 0.
-3) If the provided user file contains syntax errors:
-  a. Your solution must print out “Error encounter: The next lexeme was <lexeme> and the next
-  token was <token>”
-    i. Where <lexeme> is the lexeme that caused the problem (examples: “x”, “<>”)
-    ii. Where <token> is the uppercase name of the token (examples: “IDENT”, “UNKNOWN”)
-  b. Your solution must return with an exit code of 1.
-4) If the user did not provide a file as input:
-  a. Your solution must display an appropriate error message.
-  b. Your solution must return with an exit code of 2.
-5) If the user did provide a file as input but the file does not exist:
-  a. Your solution must display an appropriate error message.
-  b. Your solution must return with an exit code of 3.
+After 100 Steps:
+    OOOOOOO.O..OOOO..OOO..OOOOOOOO...O...OOO
+    .OO.OO.OOO.OO.OOO.OO..OOO...O.OO.OO..O..
+    ....OOO..OOOOOO.......OOOO.......O...OO.
+    .OOO..OO.....OO.......O.OO.O....OOOOOO..
+    ..O..OOOOOO.O.OO...OOO..O.OOO..O..OO.O..
+    ..O...O.O.O.O.OOO...O..OO.OO...OO...OO..
+    OOO.O...OOO....OOOOOO..O.OO...OO..OOOO.O
+    ..........O.OO..OO...O..OOOO.O....OOOOOO
+    OOOO.O.OOOO.OOOOO.O.....O.OO..O...OOO.OO
+    O..OO..OO.OOOOOO.O...OO.OOO..OO..O.O....
+    OO.....OO..OOOOOOOO...O......O.OOO.OO...
+    OO..OOOOOO.OOO.O.OO....O..O..OO....O.OO.
+    OO.OO..O.OOOO.OOOOO...OOOOO..OO....OO..O
+    .O..OO.OOO..O.O...O....OO...OO....O.O...
+    O.O.O.OOO..OO..OO.O.O.O.OOOO.OO...OO...O
+    .O...OOOO.OO..OO...O.OO.OOOO........O..O
+    OOOOO...OO.OO.....OO..O.OO......OOOO....
+    .OO.O..OO.OO.O.O.OOO....OOO.....OOOO....
+    O.OOO.O...O.OOO..OOO...O.O.O....O.OOO...
+    OO.OOO.O..O.OOOOO..O..OOOOOO.....O.O.O..
