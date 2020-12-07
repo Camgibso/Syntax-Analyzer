@@ -1,6 +1,8 @@
 This project is for Concepts of Programming Languages CS3361
+
 This project makes use of multiprocessing and other concepts we learned in class.
-I am running the larger jobs on the High Performance Computing Center(HPCC) at Texas Tech University, in the Quanah cluster. Throughout this project, apart from the main goal of the project, I have learned to use Quanah, as well as request jobs by creating my own testing shell scripts.
+
+NOTE: I am running the larger jobs on the High Performance Computing Center (HPCC) at Texas Tech University, in the Quanah cluster.
 
 How to run:
 python CellSimulator.py
