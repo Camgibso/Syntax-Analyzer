@@ -1,81 +1,40 @@
-This project is for Concepts of Programming Languages CS3361
+Problem
 
-This project makes use of multiprocessing and other concepts we learned in class.
+Develop a lexical analyzer in C or C++ that can identify lexemes and tokens found in a source code file provided
+by the user. 
 
-NOTE: I am running the larger jobs on the High Performance Computing Center (HPCC) at Texas Tech University, in the Quanah cluster.
+Once the analyzer has identified the lexemes of the language and matched them to a token group, the program should print each lexeme / token pair to the screen.
 
-How to run:
-python CellSimulator.py
+The source code file provided by the user will be written in a new programming language called “DanC” and is
+based upon the following grammar (in BNF):
 
-Description
-The cell simulation will go through 100 steps, and during each step, each cell is evaluated against its neighbors to determine if the cell is alive or dead.
-
-Cell States:
-Dead:   .
-Alive:   O
- 
-
-Cell Neighbors:
-C is the current cell
-X are the neighboring cells
-
-    XXX
-    XCX
-    XXX
- 
-
-Determining Factors:
- Alive cell stays alive if:
-	Has 2 - 4 alive neighbors
- Dead cell becomes alive if:
-	Has an positive non-zero even number of alive neighbors
-Otherwise:
-	The cell dies
- 
-
-Example:
-
-Starting Colony:
-    ........O..OO...O.................O.OO...
-    ..O............O..O.O..OO...............
-    .......O.......O.....O...........O...OO.
-    ....O..O.........O......O.............O.
-    ........O.....O.O......O.......O........
-    .......O.....O..........................
-    .O...........O............O.......OO.O..
-    ..O....O...O....OO......................
-    .O.O...........O................O.......    
-    O..........O.........O.............O....
-    ......O........O.......O..........O.....
-    ..OO..............O.........O...O.O...O.
-    .....OO.O..O.O.....O.O..................
-    O........O....OO.....O.....OO.O.........
-    O............O............O..O......O...
-    ...OO.......O...............O.........O.
-    O.............O............O.........O..
-    .........O.....O..............O...O.....
-    ........................................
-    .O........O...............O......O.O....
+P ::= S
+S ::= V:=E | read(V) | write(V) | while C do S od | S;S
+C ::= E < E | E > E | E = E | E <> E | E <= E | E >= E
+E ::= T | E + T | E - T
+T ::= F | T * F | T / F
+F ::= (E) | N | V
+V ::= a | b | … | y | z | aV | bV | … | yV | zV
+N ::= 0 | 1 | … | 8 | 9 | 0N | 1N | … | 8N | 9N
 
 
-After 100 Steps:
-    OOOOOOO.O..OOOO..OOO..OOOOOOOO...O...OOO
-    .OO.OO.OOO.OO.OOO.OO..OOO...O.OO.OO..O..
-    ....OOO..OOOOOO.......OOOO.......O...OO.
-    .OOO..OO.....OO.......O.OO.O....OOOOOO..
-    ..O..OOOOOO.O.OO...OOO..O.OOO..O..OO.O..
-    ..O...O.O.O.O.OOO...O..OO.OO...OO...OO..
-    OOO.O...OOO....OOOOOO..O.OO...OO..OOOO.O
-    ..........O.OO..OO...O..OOOO.O....OOOOOO
-    OOOO.O.OOOO.OOOOO.O.....O.OO..O...OOO.OO
-    O..OO..OO.OOOOOO.O...OO.OOO..OO..O.O....
-    OO.....OO..OOOOOOOO...O......O.OOO.OO...
-    OO..OOOOOO.OOO.O.OO....O..O..OO....O.OO.
-    OO.OO..O.OOOO.OOOOO...OOOOO..OO....OO..O
-    .O..OO.OOO..O.O...O....OO...OO....O.O...
-    O.O.O.OOO..OO..OO.O.O.O.OOOO.OO...OO...O
-    .O...OOOO.OO..OO...O.OO.OOOO........O..O
-    OOOOO...OO.OO.....OO..O.OO......OOOO....
-    .OO.O..OO.OO.O.O.OOO....OOO.....OOOO....
-    O.OOO.O...O.OOO..OOO...O.O.O....O.OOO...
-    OO.OOO.O..O.OOOOO..O..OOOOOO.....O.O.O..
+Your analyzer should accept the source code file as a required command line argument and display an
+appropriate error message if the argument is not provided or the file does not exist. The command to run your
+application will look something like this:
+
+Form: danc_analyzer <path_to_source_file>
+Example: danc_analyzer test_file.danc
+
+
+Lexeme formation is guided using the BNF rules / grammar above. Your application should output each lexeme
+and its associated token. Invalid lexemes should output UNKNOWN as their token group. The following token
+names should be used to identify each valid lexeme:
+
+Lexeme Token 		Lexeme Token 		Lexeme Token
+:= ASSIGN_OP 		+ ADD_OP 		do KEY_DO
+< LESSER_OP 		- SUB_OP 		od KEY_OD
+> GREATER_OP 		* MULT_OP		<variable name> IDENT
+= EQUAL_OP 		/ DIV_OP 		<integer> INT_LIT
+<> NEQUAL_OP 		read KEY_READ 		( LEFT_PAREN
+<= LEQUAL_OP 		write KEY_WRITE 	) RIGHT_PAREN
+>= GEQUAL_OP 		while KEY_WHILE 	; SEMICOLON
